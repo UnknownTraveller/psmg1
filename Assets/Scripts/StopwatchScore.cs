@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/**
+    I'm not that proud of it.
+**/
 public class StopwatchScore : MonoBehaviour {
 
     public Text _StopwatchDisplay;

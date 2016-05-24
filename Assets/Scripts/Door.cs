@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+    Openness of this door can be toggled by another script by calling ToggleDoor() on this component.
+    Basically just a simple FSM (closed -> opening -> open -> closing)+
+    Can propably be abused for similar cases, but it's still called Door.
+**/
 public class Door : MonoBehaviour {
 
     public AnimationCurve _OpenAnimation = new AnimationCurve(new Keyframe(0f, 3f), new Keyframe(1f, 1.5f));
@@ -36,6 +41,7 @@ public class Door : MonoBehaviour {
         {
             _AnimationTime += Time.fixedDeltaTime;
 
+            // we got 2 totally independent animations here, so we have to this stuff like this.
             float animationLength = _IsOpen ? _CloseAnimationLength : _OpenAnimationLength;
 
             if (_AnimationTime > animationLength) _AnimationTime = animationLength;
@@ -44,7 +50,7 @@ public class Door : MonoBehaviour {
 
             gameObject.transform.localPosition = new Vector3(gameObject.transform.localPosition.x, animationValue, gameObject.transform.localPosition.z);
 
-            if (_AnimationTime == 1)
+            if (_AnimationTime == 1) // we done animating. TODO: Move animation like this into a helper class.
             {
                 _Moving = false;
                 _IsOpen = !_IsOpen;

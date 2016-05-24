@@ -1,9 +1,19 @@
 ﻿using UnityEngine;
 
 // shamelessly copied from our main project (all these are still by me).
+
+/**
+    Allows to add simple idle or movement animations to an object.
+    Can stack with other animations, or multiple instances of itself.
+    Will directly manipulate the transform, so use with caution on Rigidbodies.
+**/
 public class MovementBobbing : MonoBehaviour
 {
 
+    /**
+        If this is set, the movements of this Rigidbody will be used as an input to the animation.
+        If this is not set, this will become an idle animation.
+    **/
     public Rigidbody _Rigidbody;
 
     public AnimationCurve _Curve = new AnimationCurve(new Keyframe(0f, 0f), new Keyframe(0.25f, 1f), new Keyframe(0.5f, 0f),
@@ -24,6 +34,7 @@ public class MovementBobbing : MonoBehaviour
     private Vector3 _LastPositionValues = new Vector3();
     private Quaternion _LastRotationValues = new Quaternion();
 
+    /// helper function to not care about divisions by 0. this can be optimized heavily, but it's not a hot path.
     private float NaNTo0(float x)
     {
         if (float.IsNaN(x) || float.IsInfinity(x))
@@ -39,6 +50,8 @@ public class MovementBobbing : MonoBehaviour
     {
         _CurveLength = _Curve[_Curve.length - 1].time;
     }
+
+    // TODO: possible bug right there if Update and FixedUpdate don't match??
 
     void Update()
     {

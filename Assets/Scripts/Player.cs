@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+    Player Movement, basically.
+**/
+
 [RequireComponent(typeof(Rigidbody))]
 public class Player : MonoBehaviour {
 
@@ -27,7 +31,6 @@ public class Player : MonoBehaviour {
         _Health = GetComponent<Health>();
 	}
 	
-	// Update is called once per frame
 	void FixedUpdate () {
         // this also rotates our movement by 90 degrees, because our camera angle is weird, this feels more natural
         var move = new Vector3(-_Input.Vertical, 0f, _Input.Horizontal);
@@ -47,6 +50,9 @@ public class Player : MonoBehaviour {
         {
             _Rigidbody.AddForce(move, ForceMode.Impulse);
         }
+
+        // this is not exactly the input scheme proposed;
+        // I think it makes the game easier to control (press the stick/WASD in the direction you want to go)
 
         var rotation = Quaternion.LookRotation(move, Vector3.up);
         _Rigidbody.MoveRotation(Quaternion.Slerp(gameObject.transform.rotation, rotation, Time.fixedDeltaTime * _RotateSpeed));

@@ -3,6 +3,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/**
+    Controls the main game flow ((game -> endgame UI -> { restart | quit })+)
+    This shall be attached to the main camera, so every component can access it easily (no component needs to at the moment.
+**/
 public class GameManager : MonoBehaviour {
 
     public Health _DeathTrigger;
@@ -37,9 +41,13 @@ public class GameManager : MonoBehaviour {
         GameEnd("Du hast gewonnen!\nDeine Zeit war {1:00}:{2:00} Sekunden!");
     }
 
+    /**
+        Displays the endgame UI.
+        message can be a format string with the following arguments: health, seconds, hundredths of a second
+    **/
     public void GameEnd(string message)
     {
-        _Score.Stop();
+        _Score.Stop(); // stop scoring first to get consistent results
         var elapsed = _Score.Elapsed;
 
         message = string.Format(message, _DeathTrigger.Value, (int) elapsed.TotalSeconds, elapsed.Milliseconds / 100);
@@ -58,6 +66,7 @@ public class GameManager : MonoBehaviour {
             GameEnd("Schon aufgegeben?");
         }
 
+        // animate endgamedisplay popup. this is kinda rushed.
         if(_GameEndDisplay.gameObject.activeSelf)
         {
             if(_GameEndDisplayAnimationPosition < _GameEndDisplayAnimation.keys[_GameEndDisplayAnimation.length - 1].time)
@@ -68,9 +77,12 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    // button events.
+
     public void OnRestart()
     {
-        SceneManager.LoadScene("StartScene");
+        // just reload the whole scene, no need to manually reset ever little piece
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void OnQuit()

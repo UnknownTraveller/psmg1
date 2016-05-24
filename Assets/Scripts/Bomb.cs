@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 
-// the Explosion is shamelessly copied from our main project (all these are still by me).
+// shamelessly copied a simpler version of the explosion from our main project (all these are still by me).
+
+/**
+    Explode and deal damage to a Health on collision.
+    Complete with particle, sound and physics (if the other guy is also a Rigidbody) effects.
+**/
 public class Bomb : MonoBehaviour
 {
     public int _Damage = 10;
@@ -13,7 +18,6 @@ public class Bomb : MonoBehaviour
 
     public void Start()
     {
-        // _AudioSource = GetComponentInParent<AudioSource>();
         _AudioSource = GetComponent<AudioSource>();
         _Renderer = GetComponent<Renderer>();
         _Collider = GetComponent<Collider>();

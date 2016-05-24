@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+    Beeps and opens a door when activated.
+    Optionally toggle the state of another GameObject depending on if you can interact with this console.
+    this assumes there can only be one "triggered" console at a time.
+**/
+
 public class PowerConsole : MonoBehaviour {
 
     public Door _Door;

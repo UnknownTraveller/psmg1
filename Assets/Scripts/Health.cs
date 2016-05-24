@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/**
+    Store current health, update UI Display, call events.
+**/
 public class Health : MonoBehaviour
 {
     public int _InitialValue = 100;
@@ -9,12 +12,9 @@ public class Health : MonoBehaviour
     public Text _HealthDisplay;
     public string _HealthFormatString = "Health: {0}";
 
-    private GameManager _Game;
-
     public void Start()
     {
         Value = _InitialValue;
-        _Game = Camera.main.GetComponent<GameManager>();
     }
 
     private int _Value;
