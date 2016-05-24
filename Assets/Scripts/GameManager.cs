@@ -12,10 +12,14 @@ public class GameManager : MonoBehaviour {
     public Text _GameEndDisplay;
     public AnimationCurve _GameEndDisplayAnimation = new AnimationCurve(new Keyframe(0f, 0f), new Keyframe(1.6f, 1.2f), new Keyframe(2f, 1f));
 
+    private UnityInput _Input;
+
     private float _GameEndDisplayAnimationPosition;
 
     public void Start()
     {
+        _Input = GetComponent<UnityInput>();
+
         _DeathTrigger.HealthChanged += new EventHandler<Health.HealthChangedEventArgs>(OnHealthChanged);
         _WinningTrigger.Enter += new EventHandler<CollisionEvent.CollisionEventArgs>(OnWinning);
     }
@@ -42,6 +46,8 @@ public class GameManager : MonoBehaviour {
 
         _GameEndDisplay.gameObject.SetActive(true);
         _GameEndDisplay.text = message;
+
+        _Input.enabled = false;
     }
 	
     public void Update()

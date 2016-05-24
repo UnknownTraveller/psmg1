@@ -7,7 +7,7 @@ public class UnityInput : MonoBehaviour, IInput
     public string _VerticalAxis = "Vertical";
     public string _InteractButton = "Interact";
 
-    public float Horizontal { get { return Input.GetAxis(_HorizontalAxis); } }
-    public float Vertical { get { return Input.GetAxis(_VerticalAxis); } }
+    public float Horizontal { get { return enabled ? Input.GetAxis(_HorizontalAxis) : 0; } }
+    public float Vertical { get { return enabled ? Input.GetAxis(_VerticalAxis) : 0; } }
     public bool Interact { get { return Input.GetButtonDown(_InteractButton); } }
 }
