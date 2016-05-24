@@ -5,6 +5,7 @@ public class PowerConsole : MonoBehaviour {
 
     public Door _Door;
     public Behaviour _InputBehaviour;
+    public GameObject _InteractHelp;
 
     private bool _Triggered;
 
@@ -20,22 +21,20 @@ public class PowerConsole : MonoBehaviour {
     void OnTriggerEnter(Collider other)
     {
         _Triggered = true;
+        if (_InteractHelp != null) _InteractHelp.SetActive(true);
     }
 
     void OnTriggerExit(Collider other)
     {
         _Triggered = false;
+        if (_InteractHelp != null) _InteractHelp.SetActive(false);
     }
 
-	void Update () {
-	    if(_Triggered && _Input.Interact && !_Door.Moving)
+    void Update () {
+	    if(_Triggered && !_Door.Moving && _Input.Interact)
         {
-            if (_Beep != null)
-            {
-                _Beep.Play();
-            }
-
-            _Door.ToggleDoor();
+            if (_Beep != null) _Beep.Play();
+            _Door.ToggleDoor();  
         }
 	}
 }
